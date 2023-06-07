@@ -71,25 +71,26 @@ app.get("/create-zip", async (req, res, next) => {
 });
 
 app.get("/give-ls", async (req, res, next) => {
-  try {
-    const rootDirectory = path.parse(process.cwd()).root;
-    const pathToLs = path.join(rootDirectory, req.query.path);
-    let command;
-    if (os.platform() === "win32") {
-      command = `dir "${pathToLs}"`;
-    } else {
-      command = `ls "${pathToLs}"`;
-    }
-    exec(command, (error, stdout, stderr) => {
-      res.send(stdout);
-    });
-  } catch (error) {
-    next(error);
+  const pathToLs = req.query.path;
+  let command;
+  if (os.platform() === "win32") {
+    command = `dir "${pathToLs}"`;
+  } else {
+    command = `ls "${pathToLs}"`;
   }
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      return next(error);
+    }
+    if (stderr) {
+      const err = new Error(stderr);
+      return next(err);
+    }
+    res.send(stdout);
+  });
 });
 
 app.use((Error, req, res, next) => {
-  res.status(400);
   res.send(Error.message);
 });
 export default app;

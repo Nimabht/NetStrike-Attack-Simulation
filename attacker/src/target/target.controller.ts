@@ -40,4 +40,13 @@ export class TargetController {
     const target = await this.targetService.findTargetById(targetId);
     return await this.targetService.moveMouse(target, x, y);
   }
+
+  @Get('/ls/:targetId')
+  async getListOfDirectory(
+    @Param('targetId') targetId: string,
+    @Query('path') path: string,
+  ) {
+    const target = await this.targetService.findTargetById(targetId);
+    return await this.targetService.getListOfDirectory(target, path);
+  }
 }

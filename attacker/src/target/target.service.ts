@@ -61,4 +61,16 @@ export class TargetService {
       message: 'Mouse moved successfully.',
     };
   }
+  async getListOfDirectory(target: Target, path: string) {
+    const { access_url } = target;
+    const response = await this.httpService.axiosRef.get(
+      `${access_url}/give-ls`,
+      {
+        params: {
+          path,
+        },
+      },
+    );
+    return response.data;
+  }
 }

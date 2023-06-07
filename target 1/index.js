@@ -58,21 +58,14 @@ app.get("/create-zip", async (req, res, next) => {
     zip
       .generateAsync({ type: "nodebuffer" })
       .then((content) => {
-        // Set response headers
         res.set("Content-Disposition", "attachment; filename=archive.zip");
         res.set("Content-Type", "application/zip");
-
-        // Send the zip file content in the response
-
-        console.log(content);
         res.send(content);
       })
       .catch((error) => {
         next(error);
       });
   } catch (error) {
-    console.log(error.message);
-
     next(error);
   }
 });

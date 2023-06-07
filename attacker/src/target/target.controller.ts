@@ -75,7 +75,7 @@ export class TargetController {
 
   @ApiResponse({
     status: 200,
-    description: 'got the ls of the given path successfully.',
+    description: 'Command executed successfully.',
   })
   @ApiQuery({
     name: 'path',

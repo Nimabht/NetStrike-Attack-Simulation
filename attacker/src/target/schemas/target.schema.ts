@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type TargetDocument = HydratedDocument<Target>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Target {
   @Prop({ required: true })
   access_url: string;

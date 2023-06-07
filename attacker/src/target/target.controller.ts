@@ -15,12 +15,12 @@ export class TargetController {
   constructor(private readonly targetService: TargetService) {}
 
   @Post()
-  create(@Body() createTargetDto: CreateTargetDto) {
-    return this.targetService.create(createTargetDto);
+  async create(@Body() createTargetDto: CreateTargetDto) {
+    return await this.targetService.create(createTargetDto);
   }
 
   @Get()
-  findAll() {
-    return this.targetService.findAll();
+  async findAll() {
+    return await this.targetService.findAll();
   }
 }

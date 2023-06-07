@@ -5,6 +5,8 @@ export type TargetDocument = HydratedDocument<Target>;
 
 @Schema({ timestamps: true })
 export class Target {
+  _id: string;
+
   @Prop({ required: true })
   access_url: string;
 

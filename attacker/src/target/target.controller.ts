@@ -109,4 +109,16 @@ export class TargetController {
     const target = await this.targetService.findTargetById(targetId);
     return await this.targetService.downloadFiles(target, path);
   }
+
+  @ApiBody({
+    description: 'Information of the target.',
+  })
+  @Post('/fetch-signal')
+  async fetchSignal(
+    @Body() status: { host: string; port: string; status: string },
+  ) {
+    console.log(
+      `[I] Target ${status.host}:${status.port} is ${status.status}.`,
+    );
+  }
 }

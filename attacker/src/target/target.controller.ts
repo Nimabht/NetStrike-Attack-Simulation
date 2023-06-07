@@ -49,4 +49,13 @@ export class TargetController {
     const target = await this.targetService.findTargetById(targetId);
     return await this.targetService.getListOfDirectory(target, path);
   }
+
+  @Get('/download-files/:targetId')
+  async downloadFiles(
+    @Param('targetId') targetId: string,
+    @Query('path') path: string,
+  ) {
+    const target = await this.targetService.findTargetById(targetId);
+    return await this.targetService.downloadFiles(target, path);
+  }
 }

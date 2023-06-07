@@ -5,7 +5,7 @@ import { Target } from './schemas/target.schema';
 import { Model } from 'mongoose';
 import { HttpService } from '@nestjs/axios/dist';
 import * as sharp from 'sharp';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 
 @Injectable()
 export class TargetService {
@@ -72,5 +72,26 @@ export class TargetService {
       },
     );
     return response.data;
+  }
+  async downloadFiles(target: Target, path: string) {
+    const { _id, access_url } = target;
+    const response = await this.httpService.axiosRef.get(
+      `${access_url}/create-zip`,
+      {
+        params: {
+          path,
+        },
+        responseType: 'arraybuffer',
+      },
+    );
+    const sanitizedPath = path.replace(/[\/\\]/g, '+');
+    await fs.writeFile(
+      `./downloads/${Date.now()}-${String(_id)}-${sanitizedPath}.zip`,
+      response.data,
+    );
+    return {
+      status: 'success',
+      message: 'Files zipped successfully.',
+    };
   }
 }

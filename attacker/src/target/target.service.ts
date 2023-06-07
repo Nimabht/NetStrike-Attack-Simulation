@@ -50,4 +50,15 @@ export class TargetService {
       message: 'screenshot saved successfully.',
     };
   }
+  async moveMouse(target: Target, x: string, y: string) {
+    const { access_url } = target;
+    await this.httpService.axiosRef.post(`${access_url}/move-mouse`, {
+      x,
+      y,
+    });
+    return {
+      status: 'success',
+      message: 'Mouse moved successfully.',
+    };
+  }
 }

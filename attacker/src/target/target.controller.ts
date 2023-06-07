@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { TargetService } from './target.service';
 import { CreateTargetDto } from './dto/create-target.dto';
@@ -28,5 +29,15 @@ export class TargetController {
   async screenshot(@Param('targetId') targetId: string) {
     const target = await this.targetService.findTargetById(targetId);
     return await this.targetService.takeScreenshot(target);
+  }
+
+  @Get('/move-mouse/:targetId')
+  async moveMouse(
+    @Param('targetId') targetId: string,
+    @Query('x') x: string,
+    @Query('y') y: string,
+  ) {
+    const target = await this.targetService.findTargetById(targetId);
+    return await this.targetService.moveMouse(target, x, y);
   }
 }

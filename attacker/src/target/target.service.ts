@@ -6,13 +6,20 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class TargetService {
-  constructor(@InjectModel(Target.name) private catModel: Model<Target>) {}
+  constructor(@InjectModel(Target.name) private targetModel: Model<Target>) {}
 
-  create(createTargetDto: CreateTargetDto) {
-    return 'This action adds a new target';
+  async create(createTargetDto: CreateTargetDto): Promise<Target> {
+    const { access_url, os } = createTargetDto;
+    const existingTarget = await this.targetModel.findOne({ access_url });
+    if (!existingTarget) {
+      console.log(
+        `[+] New (${os}) Target with access url : ${access_url} added to DB!`,
+      );
+      return this.targetModel.create(createTargetDto);
+    }
   }
 
-  findAll() {
-    return `This action returns all target`;
+  findAll(): Promise<Target[]> {
+    return this.targetModel.find({});
   }
 }

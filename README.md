@@ -45,7 +45,7 @@ Install with npm
   npm install
 ```
 
-# Running
+# Running (Dev)
 
 ```bash
   cd .\attacker\
@@ -88,10 +88,10 @@ Install with npm
 | :--------- | :------- | :------------ |
 | `targetId` | `string` | **Required**. |
 
-### Download file
+### Download files
 
 ```http
-  GET /target/move-mouse/:targetId?path=<path>
+  GET /target/download-files/:targetId?path=<path>
 ```
 
 | Parameter  | Type     | Description   |

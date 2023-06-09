@@ -16,11 +16,11 @@ export class TargetService {
   ) {}
 
   async create(createTargetDto: CreateTargetDto): Promise<Target> {
-    const { access_url, os } = createTargetDto;
+    const { access_url, ware_info } = createTargetDto;
     const existingTarget = await this.targetModel.findOne({ access_url });
     if (!existingTarget) {
       console.log(
-        `[+] New (${os}) Target with access url : ${access_url} added to DB!`,
+        `[+] New (${ware_info.os.platform}) Target with access url : ${access_url} added to DB!`,
       );
       return this.targetModel.create(createTargetDto);
     }

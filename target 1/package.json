@@ -15,6 +15,7 @@
     "jszip": "^3.10.1",
     "multer": "^1.4.5-lts.1",
     "robotjs": "^0.6.0",
-    "screenshot-desktop": "^1.14.0"
+    "screenshot-desktop": "^1.14.0",
+    "systeminformation": "^5.18.3"
   }
 }

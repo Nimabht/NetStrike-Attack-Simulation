@@ -10,8 +10,8 @@ export class Target {
   @Prop({ required: true })
   access_url: string;
 
-  @Prop({ required: true })
-  os: string;
+  @Prop({ type: Object, required: true })
+  ware_info: object;
 }
 
 export const TargetSchema = SchemaFactory.createForClass(Target);

@@ -9,8 +9,14 @@ export class CreateTargetDto {
   access_url: string;
 
   @ApiProperty({
-    description: 'The target os type.',
+    description: 'The target hardware and software system info.',
   })
   @IsNotEmpty()
-  os: string;
+  ware_info: {
+    os: { platform: string };
+    cpu: object;
+    mem: object;
+    disk: object[];
+    network: object[];
+  };
 }

@@ -12,7 +12,13 @@ import {
 } from '@nestjs/common';
 import { TargetService } from './target.service';
 import { CreateTargetDto } from './dto/create-target.dto';
-import { ApiTags, ApiResponse, ApiBody, ApiQuery } from '@nestjs/swagger/dist';
+import {
+  ApiTags,
+  ApiResponse,
+  ApiBody,
+  ApiQuery,
+  ApiConsumes,
+} from '@nestjs/swagger/dist';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('target')
@@ -113,6 +119,15 @@ export class TargetController {
     return await this.targetService.downloadFiles(target, path);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'The files uploaded successfully.',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'File upload',
+    type: 'object',
+  })
   @Post('/upload-file/:targetId')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(

@@ -5,7 +5,5 @@ export default async (os, host, port) => {
       access_url: `http://${host}:${port}`,
       os,
     });
-  } catch (error) {
-    process.exit(1);
-  }
+  } catch (error) {}
 };

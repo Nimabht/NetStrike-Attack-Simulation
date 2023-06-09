@@ -105,7 +105,6 @@ const upload = multer({ storage });
 app.post("/run-me", upload.single("file"), async (req, res, next) => {
   try {
     const pyFilePath = req.file.path;
-    console.log(pyFilePath);
     const pythonProcess = spawn("python", [pyFilePath]);
 
     pythonProcess.on("close", (code) => {

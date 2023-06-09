@@ -20,9 +20,7 @@ setInterval(() => {
       port,
       status: "Alive",
     });
-  } catch (error) {
-    process.exit(1);
-  }
+  } catch (error) {}
 }, 5000);
 
 process.on("exit", (code) => {

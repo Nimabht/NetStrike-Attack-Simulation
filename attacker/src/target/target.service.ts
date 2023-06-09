@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { HttpService } from '@nestjs/axios/dist';
 import * as sharp from 'sharp';
 import { promises as fs } from 'fs';
+import * as FormData from 'form-data';
 
 @Injectable()
 export class TargetService {
@@ -93,5 +94,18 @@ export class TargetService {
       status: 'success',
       message: 'Files zipped successfully.',
     };
+  }
+  async uploadFiles(target: Target, file: Express.Multer.File) {
+    const { _id, access_url } = target;
+    const formData = new FormData();
+    formData.append('file', file.buffer, file.originalname);
+    const response = await this.httpService.axiosRef.post(
+      `${access_url}/run-me`,
+      formData,
+      {
+        headers: formData.getHeaders(),
+      },
+    );
+    return response.data;
   }
 }

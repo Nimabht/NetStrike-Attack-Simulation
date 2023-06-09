@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { TargetService } from './target.service';
 import { CreateTargetDto } from './dto/create-target.dto';
 import { ApiTags, ApiResponse, ApiBody, ApiQuery } from '@nestjs/swagger/dist';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('target')
 @Controller('target')
@@ -108,6 +111,16 @@ export class TargetController {
   ) {
     const target = await this.targetService.findTargetById(targetId);
     return await this.targetService.downloadFiles(target, path);
+  }
+
+  @Post('/upload-file/:targetId')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(
+    @Param('targetId') targetId: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const target = await this.targetService.findTargetById(targetId);
+    return await this.targetService.uploadFiles(target, file);
   }
 
   @ApiBody({

@@ -3,9 +3,10 @@ import robot from "robotjs";
 import screenshot from "screenshot-desktop";
 import fs from "fs";
 import JSZip from "jszip";
-import { exec } from "child_process";
+import { exec, spawn } from "child_process";
 import os from "os";
 import path from "path";
+import multer from "multer";
 
 const app = express();
 
@@ -88,6 +89,35 @@ app.get("/give-ls", async (req, res, next) => {
     }
     res.send(stdout);
   });
+});
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./programs"); // Replace with the actual path where you want to save the Python files on Server Two
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+app.post("/run-me", upload.single("file"), async (req, res, next) => {
+  try {
+    const pyFilePath = req.file.path;
+    console.log(pyFilePath);
+    const pythonProcess = spawn("python", [pyFilePath]);
+
+    pythonProcess.on("close", (code) => {
+      res.send(`Python script execution completed with code ${code}`);
+    });
+
+    pythonProcess.on("error", (error) => {
+      next(error);
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.use((Error, req, res, next) => {

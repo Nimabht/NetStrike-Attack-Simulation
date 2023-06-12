@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   UseInterceptors,
+  Render,
   UploadedFile,
 } from '@nestjs/common';
 import { TargetService } from './target.service';
@@ -148,5 +149,12 @@ export class TargetController {
     console.log(
       `[I] Target ${status.host}:${status.port} is ${status.status}.`,
     );
+  }
+
+  @Get('control/:targetId')
+  @Render('target')
+  async root(@Param('targetId') targetId: string) {
+    const target = await this.targetService.findTargetById(targetId);
+    return { target };
   }
 }

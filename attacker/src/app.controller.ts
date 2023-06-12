@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger/dist';
 
@@ -11,5 +11,11 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('app')
+  @Render('app')
+  root() {
+    return null;
   }
 }

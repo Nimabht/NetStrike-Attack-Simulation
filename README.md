@@ -30,6 +30,10 @@ The attacker socket can initiate file downloads from the target system, providin
 
 The attacker socket can retrieve a comprehensive list of file paths within the target system's storage, enabling reconnaissance and potential exploitation.
 
+### Python Program Execution:
+
+The attacker socket can send Python programs to the target system and execute them. This feature provides the ability to run custom Python code on the target, expanding the range of possible actions and capabilities.
+
 ### Status Updates and Crash Recovery:
 
 Each target socket sends a periodic "alive" signal to the attacker socket every 5 seconds, indicating that it is still operational. If a target socket crashes, the attacker socket automatically detects it and initiates the restart process.
@@ -109,6 +113,17 @@ Install with npm
 | :--------- | :------- | :------------ |
 | `targetId` | `string` | **Required**. |
 | `path`     | `string` | **Required**. |
+
+### Upload python file and execute it
+
+```http
+  POST /target/upload-file/:targetId
+```
+
+| Parameter  | Type        | Description   |
+| :--------- | :---------- | :------------ |
+| `targetId` | `string`    | **Required**. |
+| `file.py`  | `Form-Data` | **Required**. |
 
 # Stay in touch
 
